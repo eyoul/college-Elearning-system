@@ -17,7 +17,6 @@ def register():
         phone = request.form['phone']
         email = request.form['email']
         password = request.form['password']
-        role_id = request.form['role_id']
         db = get_db()
         error = None
         if not name:
@@ -28,14 +27,12 @@ def register():
             error = 'Password is required.'
         elif not password:
             error = 'Password is required.'
-        elif not role_id:
-            error = 'Role is required.'
 
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (name, phone, email, password, role_id) VALUES (?, ?, ?, ?, ?)",
-                    (name, phone, email, generate_password_hash(password), role_id),
+                    "INSERT INTO users (name, phone, email, password, role_id) VALUES (?, ?, ?, ?, ?)",
+                    (name, phone, email, generate_password_hash(password), 2),
                 )
                 db.commit()
             except db.IntegrityError:
@@ -55,7 +52,7 @@ def login():
         db = get_db()
         error = None
         user = db.execute(
-            'SELECT * FROM user WHERE email = ?', (email,)
+            'SELECT * FROM users WHERE email = ?', (email,)
         ).fetchone()
 
         if user is None:
@@ -80,7 +77,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_db().execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
+            'SELECT * FROM users WHERE id = ?', (user_id,)
         ).fetchone()
 
 @bp.route('/logout')

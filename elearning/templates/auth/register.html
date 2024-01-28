@@ -14,13 +14,8 @@
     <input name="email" id="email" required>
     <label for="password">Password</label>
     <input type="password" name="password" id="password" required>
-    <label for="role_id">Role</label>
-    <select name="role_id" id="role_id" required>
-      <option value="">Select Role</option>
-      {% for role in roles %}
-        <option value="{{ role.id }}">{{ role.name }}</option>
-      {% endfor %}
     </select>
     <input type="submit" value="Register">
   </form>
+  <a style="text-align: center; " href="{{ url_for('auth.login') }}">You alrady have an account? Log in</a>
 {% endblock %}
