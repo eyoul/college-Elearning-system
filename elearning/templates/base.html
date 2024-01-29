@@ -7,12 +7,12 @@
       <ul>
         {% if g.user %}
           <li><span>{{ g.user['email'] }}</span>
+          <li><a href="{{ url_for('report.view_stu')}}">students</a>
+          <li><a href="#">My Program</a>
           <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
-          <li><a href="#">students</a>
-            <li><a href="#">Grade</a>
         {% else %}
-          <li><a href="{{ url_for('auth.register') }}">Register</a>
-          <li><a href="{{ url_for('auth.login') }}">Log In</a>
+          {#<li><a href="{{ url_for('auth.register') }}">Register</a>
+          <li><a href="{{ url_for('auth.login') }}">Log In</a>#}
         {% endif %}
       </ul>
     </nav>

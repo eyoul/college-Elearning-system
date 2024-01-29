@@ -94,3 +94,21 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+def login_required_role(role_id):
+    def decorator(f):
+        @functools.wraps(f)
+        def wrapped_view(*args, **kwargs):
+            if g.user is None:
+                return redirect(url_for('auth.login'))
+
+            if g.user['role_id'] != role_id:
+                return redirect(url_for('auth.unauthorized'))
+
+            return f(*args, **kwargs)
+        return wrapped_view
+    return decorator
+
+@bp.route('/unauthorized')
+def unauthorized():
+    return render_template('auth/unauthorized.html')
