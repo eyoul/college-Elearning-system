@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  {% if student %}
+    <h2>Student Details</h2>
+    <p><strong>Student ID:</strong> {{ student.id }}</p>
+    <p><strong>Major:</strong> {{ student.name }}</p>
+  {% endif %}
+
+  {#<form method="POST" action="{{ url_for('report.streem') }}">
+    <div class="form-group">
+      <label for="major_id">Select Major:</label>
+      <select name="major_id" id="major_id" class="form-control">
+        {% for major in majors %}
+          <option value="{{ major.id }}">{{ major.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>#}
+{% endblock %}

@@ -163,3 +163,29 @@ html {
   input[type="submit"]:hover {
     background: #1f5772;
   }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+  .btn-primary {
+    background-color: #aacee6;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background-color: #8fabbe;
+  }

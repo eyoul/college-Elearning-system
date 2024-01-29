@@ -16,9 +16,8 @@ CREATE TABLE roles (
 
 -- Insert role data
 INSERT INTO roles (name, description) VALUES ('admin', 'Administrator');
-INSERT INTO roles (name, description) VALUES ('student', 'Student');
 INSERT INTO roles (name, description) VALUES ('lecturer', 'Lecturer');
-
+INSERT INTO roles (name, description) VALUES ('student', 'Student');
 -- Create courses table
 CREATE TABLE courses (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -68,6 +67,10 @@ CREATE TABLE students (
   FOREIGN KEY (major_id) REFERENCES major(id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+INSERT INTO students (major_id, user_id) VALUES (1, 2);
+INSERT INTO students (major_id, user_id) VALUES (2, 3);
+INSERT INTO students (major_id, user_id) VALUES (3, 4);
 
 -- Create grades table
 CREATE TABLE grades (

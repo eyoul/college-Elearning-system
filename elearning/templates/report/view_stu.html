@@ -10,13 +10,13 @@
                 <th>Phone</th>
                 <th>Email</th>
                 <th>Major</th>
-                <th>Grade</th>
+                <th>update</th>
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
+                <td>{{ loop.index }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.phone }}</td>
                 <td>{{ user.email }}</td>
