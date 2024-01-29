@@ -2,8 +2,8 @@
 
 {% block header %}
   <h1>{% block title %}Information Board {% endblock %}</h1>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('blog.create') }}">New</a>
+  {% if g.user['role_id'] == 3 %}
+      <a class="action" href="{{ url_for('blog.create') }}">New</a>
   {% endif %}
 {% endblock %}
 
