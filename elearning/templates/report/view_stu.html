@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>List of Students</h1>
+    <h1>List of Rig Students</h1>
     <table>
         <thead>
             <tr>
@@ -10,7 +10,8 @@
                 <th>Phone</th>
                 <th>Email</th>
                 <th>Major</th>
-                <th>update</th>
+                <th>Update</th>
+                <th>Grade</th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +22,7 @@
                 <td>{{ user.phone }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.major_name }}</td>
-                <td></td>
+                <td><a href="{{ url_for('report.edit_stu', user_id=user.id) }}">Edit</a></td>
             </tr>
             {% endfor %}
         </tbody>

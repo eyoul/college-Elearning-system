@@ -3,7 +3,8 @@
 *.pyc
 __pycache__/
 
-
+trash/
+instance/
 
 .pytest_cache/
 .coverage

@@ -1,21 +1,43 @@
+<!-- auth/register.html -->
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}Register{% endblock %}</h1>
-{% endblock %}
-
 {% block content %}
+  <h2>Register</h2>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
   <form method="post">
-    <label for="name">Name</label>
-    <input name="name" id="name" required>
-    <label for="phone">Phone</label>
-    <input name="phone" id="phone" required>
-    <label for="email">Email</label>
-    <input name="email" id="email" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    </select>
-    <input type="submit" value="Register">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input type="text" id="phone" name="phone" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="major_id">Major</label>
+      <select id="major_id" name="major_id" class="form-control" required>
+        {% for major in majors %}
+          <option value="{{ major.id }}">{{ major.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
   </form>
   <a style="text-align: center; " href="{{ url_for('auth.login') }}">You alrady have an account? Log in</a>
 {% endblock %}

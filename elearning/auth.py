@@ -12,6 +12,57 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
+    db = get_db()  # Initialize or obtain the database connection
+    majors = db.execute('SELECT id, name FROM major').fetchall()
+    if request.method == 'POST':
+        name = request.form['name']
+        phone = request.form['phone']
+        email = request.form['email']
+        password = request.form['password']
+        major_id = request.form['major_id']
+
+        error = None
+        if not name:
+            error = 'Name is required.'
+        elif not phone:
+            error = 'Phone is required.'
+        elif not email:
+            error = 'Email is required.'
+        elif not password:
+            error = 'Password is required.'
+        elif not major_id:
+            error = 'Major is required.'
+
+        if error is None:
+            
+            try:
+                db.execute(
+                    "INSERT INTO users (name, phone, email, password, role_id) VALUES (?, ?, ?, ?, ?)",
+                    (name, phone, email, generate_password_hash(password), 3),
+                )
+                db.commit()
+                user = db.execute(
+                    'SELECT * FROM users WHERE email = ?', (email,)
+                ).fetchone()
+                
+                flash('Registration successful!', 'success')
+                
+                db.execute(
+                    'INSERT INTO students (major_id, user_id) VALUES (?, ?)',
+                    (major_id, user['id'])
+                )
+                db.commit()
+         
+            except db.IntegrityError:
+                error = f"User {email} is already registered."
+                flash(error)
+    
+    
+    return render_template('auth/register.html', majors=majors)
+
+"""
+@bp.route('/register', methods=('GET', 'POST'))
+def register():
     if request.method == 'POST':
         name = request.form['name']
         phone = request.form['phone']
@@ -43,7 +94,7 @@ def register():
         flash(error)
 
     return render_template('auth/register.html')
-
+"""
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':

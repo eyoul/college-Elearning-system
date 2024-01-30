@@ -63,7 +63,7 @@ CREATE TABLE users (
 CREATE TABLE students (
   id INTEGER PRIMARY KEY,
   major_id INTEGER,
-  user_id INTEGER,
+  user_id INTEGER UNIQUE,
   FOREIGN KEY (major_id) REFERENCES major(id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
