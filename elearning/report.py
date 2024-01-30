@@ -62,16 +62,16 @@ def edit_stu(user_id):
 
     return render_template('report/edit_stu.html', user=user, majors=majors)
 
+"""
+# @bp.route('/delete_stu/<int:user_id>', methods=['POST'])
+# @login_required
+# def delete_stu(user_id):
+#     db = get_db()
+#     db.execute('DELETE FROM users WHERE id = ?', (user_id,))
+#     db.commit()
 
-@bp.route('/delete_stu/<int:user_id>', methods=['POST'])
-@login_required
-def delete_stu(user_id):
-    db = get_db()
-    db.execute('DELETE FROM users WHERE id = ?', (user_id,))
-    db.commit()
-
-    return redirect(url_for('view_stu'))
-
+#     return redirect(url_for('view_stu'))
+"""
 
 @bp.route('/g_report', methods=['GET', 'POST'])
 def g_report():
