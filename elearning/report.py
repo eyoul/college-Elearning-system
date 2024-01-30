@@ -73,10 +73,6 @@ def delete_stu(user_id):
     return redirect(url_for('view_stu'))
 
 
-
-
-
-
 @bp.route('/g_report', methods=['GET', 'POST'])
 def g_report():
     db = get_db()
