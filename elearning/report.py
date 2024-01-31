@@ -82,7 +82,20 @@ def g_report():
         'WHERE students.user_id = ?',
         (session['user_id'],)
     ).fetchone()
+    grades = db.execute(
+        'SELECT grades.id, grades.student_id, grades.lecturer_id, grades.course_id, grades.grade '
+        'FROM grades '
+        'JOIN students ON grades.student_id = students.id '
+        'JOIN users ON grades.lecturer_id = users.id '
+        'JOIN courses ON grades.course_id = courses.id'
+    ).fetchall()
 
     majors = db.execute('SELECT id, name FROM major').fetchall()
-    return render_template('report/g_report.html', student=student, majors=majors)
+    return render_template('report/g_report.html', student=student, majors=majors, grades=grades)
 
+# @bp.route('/grades', methods=['GET'])
+# def get_grades():
+#     db = get_db()
+    
+
+#     return render_template('grades.html', grades=grades)
