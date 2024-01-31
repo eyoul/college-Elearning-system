@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<a href="{{ url_for('report.stu_report')}}">View Grades</a>
     <h1>List of Rig Students</h1>
     <table>
         <thead>
@@ -11,7 +12,6 @@
                 <th>Email</th>
                 <th>Major</th>
                 <th>Update</th>
-                <th>Grade</th>
             </tr>
         </thead>
         <tbody>

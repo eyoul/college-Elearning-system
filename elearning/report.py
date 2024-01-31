@@ -72,7 +72,6 @@ def edit_stu(user_id):
 
 #     return redirect(url_for('view_stu'))
 """
-
 @bp.route('/g_report', methods=['GET', 'POST'])
 def g_report():
     db = get_db()
@@ -82,20 +81,56 @@ def g_report():
         'WHERE students.user_id = ?',
         (session['user_id'],)
     ).fetchone()
+    return render_template('report/g_report.html', student=student)
+
+
+@bp.route('/stu_report', methods=['GET', 'POST'])
+def stu_report():
+    db = get_db()
     grades = db.execute(
-        'SELECT grades.id, grades.student_id, grades.lecturer_id, grades.course_id, grades.grade '
-        'FROM grades '
-        'JOIN students ON grades.student_id = students.id '
-        'JOIN users ON grades.lecturer_id = users.id '
-        'JOIN courses ON grades.course_id = courses.id'
+        'SELECT g.id, g.student_id, u.name AS student_name, g.lecturer_id, l.name AS lecturer_name, '
+        'g.course_id, c.name AS course_name, g.grade '
+        'FROM grades g '
+        'JOIN students s ON g.student_id = s.id '
+        'JOIN users u ON s.user_id = u.id '
+        'JOIN users l ON g.lecturer_id = l.id '
+        'JOIN courses c ON g.course_id = c.id'
     ).fetchall()
 
-    majors = db.execute('SELECT id, name FROM major').fetchall()
-    return render_template('report/g_report.html', student=student, majors=majors, grades=grades)
+    return render_template('report/stu_report.html', grades=grades)
 
-# @bp.route('/grades', methods=['GET'])
-# def get_grades():
-#     db = get_db()
-    
 
-#     return render_template('grades.html', grades=grades)
+@bp.route('/add_grade', methods=['GET', 'POST'])
+def add_grade():
+    if request.method == 'POST':
+        # Retrieve the form data
+        student_id = request.form['student_id']
+        course_id = request.form['course_id']
+        grade = request.form['grade']
+
+        # Insert the new grade into the database
+        db = get_db()
+        db.execute(
+            'INSERT INTO grades (student_id, lecturer_id, course_id, grade) '
+            'VALUES (?, ?, ?, ?)',
+            (student_id, g.user['id'], course_id, grade)
+        )
+        db.commit()
+
+        # Redirect to the grades page
+        return redirect(url_for('report.stu_report'))
+
+    # Retrieve necessary data for the form
+    db = get_db()
+    students = db.execute(
+        'SELECT s.id, s.user_id, u.name AS student_name '
+        'FROM students s '
+        'JOIN users u ON s.user_id = u.id'
+    ).fetchall()
+
+    courses = db.execute('SELECT * FROM courses').fetchall()
+
+    # Render the add_grade.html template with the form and data
+    return render_template('report/add_grade.html', students=students, courses=courses)
+
+

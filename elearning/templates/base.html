@@ -6,15 +6,15 @@
       <h1>College E-learning System </h1>
       <ul>
         {% if g.user %}
-          <li><span>Login As: {{ g.user['name'] }}</span>
+          <li><span>Login As: {{ g.user['name'] }}</span></li>
           {% if g.user['role_id'] == 2 %}
-          <li><a href="{{ url_for('report.view_stu')}}">students</a>
+          <li><a href="{{ url_for('report.view_stu')}}">students</a></li>
           {% endif %}
           {% if g.user['role_id'] == 3 %}
-          <li><a href="{{ url_for('report.g_report')}}">My Program</a>
+          <li><a href="{{ url_for('report.g_report')}}">My Program</a></li>
             {% endif %}
-          <li><a href="{{ url_for('blog.index') }}">Home</a>
-          <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+          <li><a href="{{ url_for('blog.index') }}">Home</a></li>
+          <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
         {% else %}
           {#<li><a href="{{ url_for('auth.register') }}">Register</a>
           <li><a href="{{ url_for('auth.login') }}">Log In</a>#}

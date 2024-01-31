@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  {% if g.user['role_id'] == 2 %}
+  <a href="{{ url_for('report.add_grade')}}">ADD Grades</a>
+  {% endif %}
+    <h2>Grades</h2>
+    {% if grades %}
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Student</th>
+            <th>Lecturer</th>
+            <th>Course</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for grade in grades %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ grade.student_name }}</td>
+              <td>{{ grade.lecturer_name }}</td>
+              <td>{{ grade.course_name }}</td>
+              <td>{{ grade.grade }}</td>
+              <td></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No grades found.</p>
+    {% endif %}
+
+{% endblock %}
