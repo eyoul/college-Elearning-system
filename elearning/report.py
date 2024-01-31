@@ -81,7 +81,18 @@ def g_report():
         'WHERE students.user_id = ?',
         (session['user_id'],)
     ).fetchone()
-    return render_template('report/g_report.html', student=student)
+    gradereport = db.execute(
+        'SELECT g.id, g.student_id, u.name AS student_name, g.lecturer_id, l.name AS lecturer_name, '
+        'g.course_id, c.name AS course_code, c.description AS course_name, g.grade, g.creditH '
+        'FROM grades g '
+        'JOIN students s ON g.student_id = s.id '
+        'JOIN users u ON s.user_id = u.id '
+        'JOIN users l ON g.lecturer_id = l.id '
+        'JOIN courses c ON g.course_id = c.id ' 
+        'WHERE s.user_id = ?',
+        (session['user_id'],)
+).fetchall()
+    return render_template('report/g_report.html', student=student, gradereport=gradereport)
 
 
 @bp.route('/stu_report', methods=['GET', 'POST'])
@@ -89,7 +100,7 @@ def stu_report():
     db = get_db()
     grades = db.execute(
         'SELECT g.id, g.student_id, u.name AS student_name, g.lecturer_id, l.name AS lecturer_name, '
-        'g.course_id, c.name AS course_name, g.grade '
+        'g.course_id, c.name AS course_name, g.grade, g.creditH '
         'FROM grades g '
         'JOIN students s ON g.student_id = s.id '
         'JOIN users u ON s.user_id = u.id '
@@ -107,13 +118,14 @@ def add_grade():
         student_id = request.form['student_id']
         course_id = request.form['course_id']
         grade = request.form['grade']
+        creditH = request.form['creditH']
 
         # Insert the new grade into the database
         db = get_db()
         db.execute(
-            'INSERT INTO grades (student_id, lecturer_id, course_id, grade) '
-            'VALUES (?, ?, ?, ?)',
-            (student_id, g.user['id'], course_id, grade)
+            'INSERT INTO grades (student_id, lecturer_id, course_id, grade, creditH) '
+            'VALUES (?, ?, ?, ?, ?)',
+            (student_id, g.user['id'], course_id, grade, creditH)
         )
         db.commit()
 

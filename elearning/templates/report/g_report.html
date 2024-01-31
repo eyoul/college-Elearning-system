@@ -15,5 +15,31 @@
     <p><strong>Student ID:</strong> {{ student.id }}</p>
     <p><strong>Major:</strong> {{ student.name }}</p>
   {% endif %}
-
-  {% endblock %}
+  <h2>Grades</h2>
+  {% if gradereport %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Course Code</th>
+          <th>Course Title</th>
+          <th>Credit Hour</th>
+          <th>Grade</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for grade in gradereport %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ grade.course_code }}</td>
+            <td>{{ grade.course_name }}</td>
+            <td>{{ grade.creditH }}</td>
+            <td>{{ grade.grade }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No grades found.</p>
+  {% endif %}
+{% endblock %}

@@ -12,7 +12,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
-    db = get_db()  # Initialize or obtain the database connection
+    db = get_db()
     majors = db.execute('SELECT id, name FROM major').fetchall()
     if request.method == 'POST':
         name = request.form['name']
@@ -34,7 +34,6 @@ def register():
             error = 'Major is required.'
 
         if error is None:
-            
             try:
                 db.execute(
                     "INSERT INTO users (name, phone, email, password, role_id) VALUES (?, ?, ?, ?, ?)",
@@ -43,22 +42,21 @@ def register():
                 db.commit()
                 user = db.execute(
                     'SELECT * FROM users WHERE email = ?', (email,)
-                ).fetchone()               
+                ).fetchone()
                 db.execute(
                     'INSERT INTO students (major_id, user_id) VALUES (?, ?)',
                     (major_id, user['id'])
                 )
                 db.commit()
-            except db.IntegrityError:
-                error = f"User {email}"
-            else:
+                flash('Registration successful!', 'success')
                 return redirect(url_for("auth.login"))
+            except db.IntegrityError:
+                error = f"User {email} already exists."
 
         flash(error)
 
-        # flash('Registration successful!', 'success')
-    
     return render_template('auth/register.html', majors=majors)
+
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():

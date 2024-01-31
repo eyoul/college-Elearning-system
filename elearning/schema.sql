@@ -78,7 +78,8 @@ CREATE TABLE grades (
   student_id INTEGER,
   lecturer_id INTEGER,
   course_id INTEGER,
-  grade INTEGER,
+  grade TEXT,
+  creditH INTEGER,
   FOREIGN KEY (student_id) REFERENCES students(id),
   FOREIGN KEY (lecturer_id) REFERENCES users(id),
   FOREIGN KEY (course_id) REFERENCES courses(id)
