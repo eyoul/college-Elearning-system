@@ -146,3 +146,25 @@ def add_grade():
     return render_template('report/add_grade.html', students=students, courses=courses)
 
 
+"""
+
+Raw Mark Interval [100 %]	Corresponding fixed
+Number Grade
+
+Corresponding
+Letter Grade
+
+Status Description	Class Description
+[90,100]	4.0	    A+	Excellent	First class with Great distinction
+[83, 90)	4.0	    A
+[80, 83)	3.75	A–
+[75, 80)	3.5	    B+	Very Good	First class with Distinction
+[68, 75)	3.0	    B
+[65, 68)	2.75	B–	Good	First class
+[60, 65)	2.5	    C+	Second class
+[50, 60)	2.0	    C	Satisfactory
+[45, 50)	1.75	C–	Unsatisfactory	Lower class
+[40,45)	    1.0	    D	Very Poor	Lower class
+[30,40)	    0	    Fx	Fail	Lowest class
+[<30)	    0	    F	Fail	Lowest class
+"""
