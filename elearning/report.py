@@ -109,6 +109,21 @@ def stu_report():
     ).fetchall()
 
     return render_template('report/stu_report.html', grades=grades)
+# Define your grading scale
+grading_scale = {
+    'A+': [90, 100],
+    'A': [83, 90],
+    'A-': [80, 83],
+    'B+': [75, 80],
+    'B': [68, 75],
+    'B-': [65, 68],
+    'C+': [60, 65],
+    'C': [50, 60],
+    'C-': [45, 50],
+    'D': [40, 45],
+    'Fx': [30, 40],
+    'F': [0, 30]
+}
 
 
 @bp.route('/add_grade', methods=['GET', 'POST'])
@@ -117,9 +132,10 @@ def add_grade():
         # Retrieve the form data
         student_id = request.form['student_id']
         course_id = request.form['course_id']
-        grade = request.form['grade']
-        creditH = request.form['creditH']
+        raw_grade = int(request.form['grade'])
+        creditH = int(request.form['creditH'])
 
+        grade = determine_grade(raw_grade)
         # Insert the new grade into the database
         db = get_db()
         db.execute(
@@ -145,6 +161,11 @@ def add_grade():
     # Render the add_grade.html template with the form and data
     return render_template('report/add_grade.html', students=students, courses=courses)
 
+def determine_grade(score):
+    for grade, range_ in grading_scale.items():
+        if range_[0] <= score < range_[1]:
+            return grade
+    return 'Invalid'
 
 """
 
