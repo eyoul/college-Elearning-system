@@ -127,7 +127,7 @@ def login_required_role(role_id):
 def unauthorized():
     return render_template('auth/unauthorized.html')
 
-"""
+
 #reigistration for lect
 @bp.route('/register2', methods=('GET', 'POST'))
 def register2():
@@ -162,4 +162,3 @@ def register2():
         flash(error)
 
     return render_template('auth/register2.html')
-"""

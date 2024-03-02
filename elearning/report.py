@@ -138,15 +138,19 @@ def add_grade():
         grade = determine_grade(raw_grade)
         # Insert the new grade into the database
         db = get_db()
-        db.execute(
-            'INSERT INTO grades (student_id, lecturer_id, course_id, grade, creditH) '
-            'VALUES (?, ?, ?, ?, ?)',
-            (student_id, g.user['id'], course_id, grade, creditH)
-        )
-        db.commit()
+        try:
+            db.execute(
+                'INSERT INTO grades (student_id, lecturer_id, course_id, grade, creditH) '
+                'VALUES (?, ?, ?, ?, ?)',
+                (student_id, g.user['id'], course_id, grade, creditH)
+            )
+            db.commit()
 
         # Redirect to the grades page
-        return redirect(url_for('report.stu_report'))
+            return redirect(url_for('report.stu_report'))
+        except db.IntegrityError:
+            error = f"The course is alrady exist"
+        flash(error)
 
     # Retrieve necessary data for the form
     db = get_db()

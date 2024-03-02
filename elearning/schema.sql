@@ -77,7 +77,7 @@ CREATE TABLE grades (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   student_id INTEGER,
   lecturer_id INTEGER,
-  course_id INTEGER,
+  course_id INTEGER UNIQUE,
   grade TEXT,
   creditH INTEGER,
   FOREIGN KEY (student_id) REFERENCES students(id),
