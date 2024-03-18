@@ -68,9 +68,9 @@ CREATE TABLE students (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-INSERT INTO students (major_id, user_id) VALUES (1, 2);
-INSERT INTO students (major_id, user_id) VALUES (2, 3);
-INSERT INTO students (major_id, user_id) VALUES (3, 4);
+-- INSERT INTO students (major_id, user_id) VALUES (1, 2);
+-- INSERT INTO students (major_id, user_id) VALUES (2, 3);
+-- INSERT INTO students (major_id, user_id) VALUES (3, 4);
 
 -- Create grades table
 CREATE TABLE grades (

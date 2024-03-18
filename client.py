@@ -1,37 +1,21 @@
 
 import Pyro4
-import subprocess
 
 try:
     # Read the URI from the file
     with open("server_uri.txt", "r") as f:
         uri = f.read().strip()
 
+    # Connect to the Pyro4 server
     hello = Pyro4.Proxy(uri)
+
+    # Call the sayHello method
     response = hello.sayHello()
     print("Response:", response)
 
-    # Run app.py after receiving the response
-    subprocess.Popen(["python", "app.py"])
+    # Run something after receiving the response
+    print("Access using http://127.0.0.1:5000/ address ")
 
 except Exception as e:
     print("Client exception:", str(e))
 
-
-"""
-
-# to access the Hello World 
-import Pyro4
-
-try:
-    # Read the URI from the file
-    with open("server_uri.txt", "r") as f:
-        uri = f.read().strip()
-
-    hello = Pyro4.Proxy(uri)
-    response = hello.sayHello()
-    print("Response:", response)
-except Exception as e:
-    print("Client exception:", str(e))
-
-"""
